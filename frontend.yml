@@ -1,0 +1,8 @@
+- name: Frontend Execution using ansible
+  hosts: all
+  become: true
+  tasks:
+    - name: Installing Nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
