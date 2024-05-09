@@ -34,3 +34,37 @@
       ansible.builtin.file:
         name: /app
         state: directory
+
+    - name: Download & Extract backend code
+      ansible.builtin.unarchive:
+        src: https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip
+        dest: /app
+        remote_src: true
+
+    - name: Download nodejs application
+      community.general.npm:
+        path: /app
+
+    - name: Install MYSQL Client & MYSQL Python Module
+      ansible.builtin.dnf:
+        name:
+          - mysql
+          - python3-PyMySQL
+        state: present
+
+    - name: Load schema
+      community.mysql.mysql_db:
+        state: import
+        name: all
+        target: /app/schema/backend.sql
+        login_user: root
+        login_password: ExpenseApp@1
+        login_host: 172.31.0.188
+
+    - name: Start backend service
+      ansible.builtin.systemd_service:
+        name: backend
+        state: restarted
+        enabled: true
+        daemon_reload: true
+
