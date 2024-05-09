@@ -1,0 +1,36 @@
+- name: backend Server installation
+  hosts: localhost
+  become: true
+  tasks:
+    - name: setup prompt
+      ansible.builtin.shell: set-prompt backend
+
+    - name: disable nodejs default version
+      ansible.builtin.shell: dnf module disable nodejs -y
+
+    - name: disable nodejs
+      ansible.builtin.shell: dnf module enable nodejs:20 -y
+
+    - name: Installing the nodejs
+      ansible.builtin.dnf:
+        name: nodejs
+        state: present
+
+    - name: Add expense user
+      ansible.builtin.user:
+        name: expense
+
+    - name: Copy the backend file
+      ansible.builtin.copy:
+        src: backend.service
+        dest: /etc/systemd/system/backend.service
+
+    - name: remove a APP Directory
+      ansible.builtin.file:
+        name: /app
+        state: absent
+
+    - name: create a APP Directory
+      ansible.builtin.file:
+        name: /app
+        state: directory
