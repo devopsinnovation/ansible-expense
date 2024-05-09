@@ -1,5 +1,5 @@
 - name: backend Server installation
-  hosts: localhost
+  hosts: all
   become: true
   tasks:
     - name: setup prompt
