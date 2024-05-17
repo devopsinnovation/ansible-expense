@@ -14,18 +14,18 @@
 
     - name: Remove the old directory
       ansible.builtin.file:
-        path: /usr/share/nginx/hmtl
+        path: /usr/share/nginx/html
         state: absent
 
     - name: Create the directory
       ansible.builtin.file:
-        path: /usr/share/nginx/hmtl
+        path: /usr/share/nginx/html
         state: directory
 
     - name: download the content
       ansible.builtin.unarchive:
         src: https://expense-artifacts.s3.amazonaws.com/expense-frontend-v2.zip
-        dest: /usr/share/nginx/hmtl
+        dest: /usr/share/nginx/html
         remote_src: true
 
 
