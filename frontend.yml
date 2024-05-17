@@ -14,12 +14,12 @@
 
     - name: Remove the old directory
       ansible.builtin.file:
-        path: /usr/share/ngnix/hmtl
+        path: /usr/share/nginx/hmtl
         state: absent
 
     - name: Create the directory
       ansible.builtin.file:
-        path: /usr/share/ngnix/hmtl
+        path: /usr/share/nginx/hmtl
         state: directory
 
     - name: download the content
@@ -31,6 +31,6 @@
 
     - name: Start Nginx Service
       ansible.builtin.systemd_service:
-        name: ngnix
+        name: nginx
         state: restarted
         enabled: true
